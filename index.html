@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-a-Sketch</title>
+    <link rel = "stylesheet" href = "styles.css">
+</head>
+<body>
+    <h1>Etch-a-Sketch</h1>
+    <div class = "buttons">
+        <button class = "clear">Clear</button>
+        <button class = "colors">Choose Color</button>
+        <input type = "color" class = "color-picker">
+        <br>
+        <label for = "opacity-picker">Opacity</label>
+            <input type = "range" class = "opacity-picker" min ="0.1" max="1" step="0.1" value = "0.1">
+        <button class = "randColor">Randomize Color</button>
+        <button class = "grid">Change Grid Size</button>
+    </div>
+    
+    <div class = "container">
+        <!-- here, the grid is created-->
+    </div>
+    <div class = "footer">
+        <p>© Made by Akshat Sharma</p>
+    </div>
+</body>
+
+<script>
+    let container = document.querySelector('.container');
+    let maxHeight = window.innerHeight/1.5;
+    let maxWidth = window.innerWidth/1.5;
+
+    //to draw only when mouse is down, initialize isDown variable 
+    isDown = false; //by default, mouse is not pressed, obviously
+    container.addEventListener("mousedown", () => {
+        isDown = true;
+    })
+
+    container.addEventListener("mouseup", () => {
+        isDown = false;
+    })
+
+
+    //choose the smaller value as the dimension of the container, so that squares can be displayed
+    let dimension = 0;
+    if (maxHeight<=maxWidth){
+        dimension = maxHeight;
+    }
+    else{
+        dimension = maxWidth;
+    }
+    container.style.height = dimension + 'px';
+    container.style.width = container.style.height;
+
+    let clearButton = document.querySelector(".clear");
+    let colorButton = document.querySelector(".colors");
+    let gridSizeButton = document.querySelector(".grid");
+    let colorPicker = document.querySelector(".color-picker");
+    let opacityPicker = document.querySelector(".opacity-picker");
+    let opacity = 0.1;
+
+    //implement opacity for shading purposes
+    opacityPicker.addEventListener("input", () => {
+        opacity = parseFloat(opacityPicker.value);
+    })
+
+    let color = '#000000'; //sets color as black by default
+    let value = 16; //default dimension of grid square is 16px x 16px
+    function createGrid(value){
+        //first ensure that no grid already exists
+        if (value<=100){
+            container.innerHTML = "";
+
+            //now create the grid
+            let boxHeight = dimension/value;
+            let boxWidth = dimension/value;
+
+            for (let i = 0; i<value*value; i++){
+                let box = document.createElement('div');
+                box.style.height = boxHeight + 'px';
+                box.style.width = boxWidth + 'px';
+                box.classList.add('box');
+                container.appendChild(box);
+                box.style.opacity = 0;
+                box.addEventListener("click",() => {
+                    box.style.backgroundColor = color;
+                        let currentOpacity = parseFloat(box.style.opacity);
+                        if (currentOpacity + opacity<1){
+                            currentOpacity += opacity;
+                        }
+                        else{
+                            currentOpacity = 1;
+                        }
+                        box.style.opacity = currentOpacity.toString();
+                })
+
+                box.addEventListener("mouseenter", () => {
+                    if (isDown){
+                        box.style.backgroundColor = color;
+                        let currentOpacity = parseFloat(box.style.opacity);
+                        if (currentOpacity + opacity<1){
+                            currentOpacity += opacity;
+                        }
+                        else{
+                            currentOpacity = 1;
+                        }
+                        box.style.opacity = currentOpacity.toString();
+                    }
+                })
+                //it will automatically go to next line once the number of boxes
+                // in 1 line is maxxed out since it has nowhere else to go, as 
+                // size of container is fixed (boxHeight x boxWidth)
+            }
+        }
+        else{
+            alert("The grid can only consist of 100 boxes or less.");
+        }
+    }
+    createGrid(16);
+
+    clearButton.addEventListener("click", () => {
+        createGrid(value);
+    })
+
+    colorButton.addEventListener("click", () => {
+        colorPicker.click();
+    })
+    colorPicker.addEventListener("input", () => {
+        color = colorPicker.value;
+    })
+
+    gridSizeButton.addEventListener("click",() => {
+        value = prompt("Enter size of grid: ");
+        createGrid(value);
+    })
+
+
+//implement randomize colors button
+    
+    let randColor = document.querySelector('.randColor');
+    
+    randColor.addEventListener("click",() => {
+        let r = Math.floor(Math.random() * 256);
+        let g = Math.floor(Math.random() * 256);
+        let b = Math.floor(Math.random() * 256); 
+        let rgbString = `rgb(${r}, ${g}, ${b})`;
+        color = rgbString;
+    })
+
+
+
+    
+
+</script>
+
+</html>

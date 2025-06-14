@@ -1,0 +1,65 @@
+h1{
+    font-size: 72px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+body{
+    display: flex;
+    flex-flow: column wrap;
+    
+    background-image: linear-gradient(rgb(178, 244, 251), rgb(0, 4, 255));
+    padding: 42px;
+}
+
+.buttons{
+    margin-top:-10px;
+    margin-bottom: 54px;
+    align-self: center;
+    text-align: center;
+}
+button{
+    height: 54px;
+    width:108px;
+    border-radius:12px;
+    margin: 11px;
+    padding: 5px;
+}
+
+button:hover{
+    background-color: grey;
+    color: white;
+}
+
+.container{
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid black;
+}
+.box{
+    border: 3px;
+    box-sizing: border-box; /*So border is included as part of height and width*/
+    margin: 0px;
+    color: green;
+}
+
+.footer{
+    position: bottom;
+    text-align: center; 
+    color: white;
+    font-weight: bold;
+    font-size: 21px;
+    background-color: blue;
+    margin-top: 108px;
+    margin-left: -51px;
+    margin-bottom: -51px;
+    width: 100vw;
+}
+
+label{
+    font-size: smaller;
+}
