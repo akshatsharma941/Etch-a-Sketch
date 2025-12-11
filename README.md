@@ -61,7 +61,7 @@ No frameworks or external libraries are used, keeping the implementation lightwe
 ### Project Structure
 - index.html
 - styles.css
-(Inline JavaScript inside index.html)
+- (Inline JavaScript inside index.html)
 
 ### Running the Project
 
